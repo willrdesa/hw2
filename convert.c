@@ -95,3 +95,25 @@ void to_sign_magnitude(int n, char *out) {
     //Terminator
     out[pos] = '\0';
 }
+
+void to_ones_complement(int n, char *out) {
+    to_sign_magnitude(n, out);
+
+    //Invert all bits if negative
+    if (out[0] == '1') {
+        for(int i = 1; i < strlen(out); i++) {
+            out[i] = out[i] == '0' ? '1' : '0';
+        }
+    }
+}
+
+void to_twos_complement(int n, char *out) {
+    to_sign_magnitude(n, out);
+
+    //Invert all bits but last one if negative
+    if (out[0] == '1') {
+        for(int i = 1; i < strlen(out) - 1; i++) {
+            out[i] = out[i] == '0' ? '1' : '0';
+        }
+    }
+}
