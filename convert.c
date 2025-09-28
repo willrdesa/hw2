@@ -13,6 +13,8 @@ void oct_to_bin(const char *oct, char *out) {
         out[pos++] = (octal_digit >> 1) & 1 ? '1' : '0';
         out[pos++] = (octal_digit >> 0) & 1 ? '1' : '0';
     }
+
+    //Terminator
     out[strlen(out)] = '\0';
 }
 
@@ -42,6 +44,8 @@ void oct_to_hex(const char *oct, char *out) {
         hex += (bin[pos++] - '0') << 0;
         out[i] = hex < 10 ? '0' + hex : 'A' + (hex - 10);
     }
+
+    //Terminator
     out[strlen(out)] = '\0';
 }
 
@@ -64,5 +68,30 @@ void hex_to_bin(const char *hex, char *out) {
         out[pos++] = (c_num >> 1) & 1 ? '1' : '0';
         out[pos++] = (c_num >> 0) & 1 ? '1' : '0';
     }
+
+    //Terminator
     out[strlen(out)] = '\0';
+}
+
+void to_sign_magnitude(int n, char *out) {
+    int pos = 0;
+    u_int32_t pow = 1 << 30;
+
+    //Handle first bit and negative n
+    if(n < 0) {
+        n = n * -1;
+        out[pos++] = '1';
+    } else out[pos++] = '0';
+
+    //Converts dec to bin
+    while (pow > 0) {
+        int remainder = n / pow;
+        n = n % pow;
+        out[pos++] = '0' + remainder;
+
+        pow /= 2;
+    }
+
+    //Terminator
+    out[pos] = '\0';
 }
